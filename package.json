@@ -3,6 +3,7 @@
     "fetch": "node main.mjs"
   },
   "devDependencies": {
+    "d3-array": "^3.2.2",
     "d3-dsv": "^3.0.1"
   }
 }

@@ -1,5 +1,6 @@
 import { writeFileSync, readFileSync, existsSync } from "fs";
 import { csvFormat, csvParse } from "d3-dsv";
+import { sum, rollups } from "d3-array";
 
 const main = async () => {
   const req = await fetch("https://kubra.io/stormcenter/api/v1/stormcenters/4fbb3ad3-e01d-4d71-9575-d453769c1171/views/8ed2824a-bd92-474e-a7c4-848b812b7f9b/currentState?preview=false");
@@ -23,15 +24,35 @@ const main = async () => {
 
   writeFileSync("./data.csv", csvFormat(now));
 
-  if (existsSync("./history.csv")) {
-    const history = csvParse(readFileSync("./history.csv").toString());
-    const data = [...history, ...now];
-    writeFileSync("./history.csv", csvFormat(data));
-  } else {
-    writeFileSync("./history.csv", csvFormat(now));
-  }
+  const data = existsSync("./history.csv") 
+    ? [...csvParse(readFileSync("./history.csv").toString()), ...now] 
+    : now;
 
-  console.log(slug, now.reduce((acc, d) => acc + d.customers_affected, 0))
+  writeFileSync("./history.csv", csvFormat(data));
+
+  const reduced = data.map(({ timestamp, customers_affected }) => ({
+    timestamp: new Date(
+        new Date(timestamp)
+          .toLocaleString("en-US", { timeZone: "America/Detroit" })
+      ).toISOString(),
+    customers_affected: +customers_affected,
+  }))
+
+  writeFileSync(
+    "./history-reduced.csv",
+    csvFormat(
+      rollups(
+        reduced,
+        v => sum(v, o => o.customers_affected),
+        d => d.timestamp,
+      ).map(([timestamp, customers_affected]) => ({ timestamp, customers_affected }))
+    )
+  )
+
+  console.log(
+    slug, 
+    sum(now, d => d.customers_affected)
+  )
 }
 
 main();
