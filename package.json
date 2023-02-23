@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "fetch": "node main.mjs"
+  },
+  "devDependencies": {
+    "d3-dsv": "^3.0.1"
+  }
+}

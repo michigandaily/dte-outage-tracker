@@ -1,0 +1,36 @@
+name: Fetch DTE data
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  schedule:
+    - cron: "*/15 * * * *"
+
+jobs:
+  fetch:
+    name: Fetch DTE data
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: main
+    - name: Set up JavaScript
+      uses: actions/setup-node@v3
+      with:
+        node-version: 19.x
+        cache: 'yarn'
+    - name: Install dependencies
+      run: yarn install --frozen-lockfile
+    - name: Fetch data
+      run: yarn fetch
+    - name: Push data to GitHub
+      run: |
+        git add .
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        timestamp=$(date -u)
+        git commit -m "Fetch data at ${timestamp}" || exit 0
+        git push
