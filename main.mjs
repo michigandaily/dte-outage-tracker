@@ -5,7 +5,9 @@ const main = async () => {
   const req = await fetch("https://kubra.io/stormcenter/api/v1/stormcenters/4fbb3ad3-e01d-4d71-9575-d453769c1171/views/8ed2824a-bd92-474e-a7c4-848b812b7f9b/currentState?preview=false");
   const res = await req.json();
 
-  const request = await fetch(`https://kubra.io/${res.data.interval_generation_data}/public/thematic-2/thematic_areas.json`);
+  const slug = res.data.interval_generation_data;
+
+  const request = await fetch(`https://kubra.io/${slug}/public/thematic-2/thematic_areas.json`);
   const response = await request.json();
 
   const timestamp = new Date().toISOString();
@@ -29,7 +31,7 @@ const main = async () => {
     writeFileSync("./history.csv", csvFormat(now));
   }
 
-  console.log(res.data.interval_generation_data, now.reduce((acc, d) => acc + d.customers_affected, 0))
+  console.log(slug, now.reduce((acc, d) => acc + d.customers_affected, 0))
 }
 
 main();
