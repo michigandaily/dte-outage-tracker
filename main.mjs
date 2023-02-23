@@ -8,8 +8,10 @@ const main = async () => {
   const request = await fetch(`https://kubra.io/${res.data.interval_generation_data}/public/thematic-2/thematic_areas.json`);
   const response = await request.json();
 
+  const timestamp = new Date().toISOString();
+
   const now = response.file_data.map(d => ({
-    timestamp: new Date().toISOString(),
+    timestamp,
     zipcode: d.title,
     number_outages: d.desc.n_out,
     customers_served: d.desc.cust_s,
