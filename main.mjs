@@ -24,8 +24,8 @@ const main = async () => {
 
   writeFileSync("./data.csv", csvFormat(now));
 
-  const data = existsSync("./history.csv") 
-    ? [...csvParse(readFileSync("./history.csv").toString()), ...now] 
+  const data = existsSync("./history.csv")
+    ? [...csvParse(readFileSync("./history.csv").toString()), ...now]
     : now;
 
   writeFileSync("./history.csv", csvFormat(data));
@@ -34,7 +34,7 @@ const main = async () => {
     timestamp: new Date(
         new Date(timestamp)
           .toLocaleString("en-US", { timeZone: "America/Detroit" })
-      ).toISOString(),
+      ).toISOString().substring(0, 19),
     customers_affected: +customers_affected,
   }))
 
