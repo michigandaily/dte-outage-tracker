@@ -49,6 +49,11 @@ const main = async () => {
     )
   )
 
+  const rq = await fetch("https://outage.dteenergy.com/situations.json");
+  const rs = await rq.json();
+
+  writeFileSync("./data-home.json", JSON.stringify(rs, null, 2));
+
   console.log(
     slug, 
     sum(now, d => d.customers_affected)
