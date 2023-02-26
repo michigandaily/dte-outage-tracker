@@ -55,7 +55,7 @@ const main = async () => {
   writeFileSync("./data-home.json", JSON.stringify(rs, null, 2));
   writeFileSync(
     "./data-api.json", 
-    JSON.stringify(await (await fetch("https://kubra.io/data/bd59814c-2275-4c08-a78e-c12e11052aad/public/summary-1/data.json")).json())
+    JSON.stringify(await (await fetch(`https://kubra.io/${slug}/public/summary-1/data.json`)).json())
   );
 
   console.log(
