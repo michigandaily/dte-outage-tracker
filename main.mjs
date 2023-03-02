@@ -49,13 +49,38 @@ const main = async () => {
     )
   )
 
-  const rq = await fetch("https://outage.dteenergy.com/situations.json");
-  const rs = await rq.json();
-
-  writeFileSync("./data-home.json", JSON.stringify(rs, null, 2));
+  const home = await (await fetch("https://outage.dteenergy.com/situations.json")).json();
+  const home_history = csvParse(readFileSync("./data-home.csv").toString());
   writeFileSync(
-    "./data-api.json", 
-    JSON.stringify(await (await fetch(`https://kubra.io/${slug}/public/summary-1/data.json`)).json())
+    "./data-home.csv",
+    csvFormat(
+      [...home_history,
+        {
+          date_generated: home.lastUpdated,
+          number_crews: home.currentSituations[0].displayValue,
+          number_customers_affected: home.currentSituations[1].displayValue,
+          percent_with_power: home.currentSituations[2].displayValue,
+        }
+      ]
+    )
+  );
+
+  const api = await (await fetch(`https://kubra.io/${slug}/public/summary-1/data.json`)).json();
+  const api_history = csvParse(readFileSync("./data-api.csv").toString());
+  writeFileSync(
+    "./data-api.csv", 
+    csvFormat(
+      [...api_history,
+        {
+          total_affected: api.summaryFileData.totals[0].total_cust_a.val,
+          total_percent_affected: api.summaryFileData.totals[0].total_percent_cust_a.val,
+          total_percent_active: api.summaryFileData.totals[0].total_percent_cust_active.val,
+          total_served: api.summaryFileData.totals[0].total_cust_s,
+          total_outages: api.summaryFileData.totals[0].total_outages,
+          date_generated: api.summaryFileData.date_generated,
+        }
+      ]
+    )
   );
 
   console.log(
