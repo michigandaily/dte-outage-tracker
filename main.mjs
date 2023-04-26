@@ -24,64 +24,66 @@ const main = async () => {
 
   writeFileSync("./data.csv", csvFormat(now));
 
-  const data = existsSync("./history.csv")
-    ? [...csvParse(readFileSync("./history.csv").toString()), ...now]
-    : now;
+  // const data = existsSync("./history.csv")
+  //   ? [...csvParse(readFileSync("./history.csv").toString()), ...now]
+  //   : now;
 
-  writeFileSync("./history.csv", csvFormat(data));
+  // writeFileSync("./history.csv", csvFormat(data));
 
-  const reduced = data.map(({ timestamp, customers_affected }) => ({
-    timestamp: new Date(
-        new Date(timestamp)
-          .toLocaleString("en-US", { timeZone: "America/Detroit" })
-      ).toISOString().substring(0, 19),
-    customers_affected: +customers_affected,
-  }))
+  // const reduced = data.map(({ timestamp, customers_affected }) => ({
+  //   timestamp: new Date(
+  //       new Date(timestamp)
+  //         .toLocaleString("en-US", { timeZone: "America/Detroit" })
+  //     ).toISOString().substring(0, 19),
+  //   customers_affected: +customers_affected,
+  // }))
 
-  writeFileSync(
-    "./history-reduced.csv",
-    csvFormat(
-      rollups(
-        reduced,
-        v => sum(v, o => o.customers_affected),
-        d => d.timestamp,
-      ).map(([timestamp, customers_affected]) => ({ timestamp, customers_affected }))
-    )
-  )
+  // writeFileSync(
+  //   "./history-reduced.csv",
+  //   csvFormat(
+  //     rollups(
+  //       reduced,
+  //       v => sum(v, o => o.customers_affected),
+  //       d => d.timestamp,
+  //     ).map(([timestamp, customers_affected]) => ({ timestamp, customers_affected }))
+  //   )
+  // )
 
   const home = await (await fetch("https://outage.dteenergy.com/situations.json")).json();
-  const home_history = csvParse(readFileSync("./data-home.csv").toString());
-  writeFileSync(
-    "./data-home.csv",
-    csvFormat(
-      [...home_history,
-        {
-          date_generated: home.lastUpdated,
-          number_crews: home.currentSituations[0].displayValue,
-          number_customers_affected: home.currentSituations[1].displayValue,
-          percent_with_power: home.currentSituations[2].displayValue,
-        }
-      ]
-    )
-  );
+  writeFileSync("./data-home.json", JSON.stringify(home, null, 2));
+  // const home_history = csvParse(readFileSync("./data-home.csv").toString());
+  // writeFileSync(
+  //   "./data-home.csv",
+  //   csvFormat(
+  //     [...home_history,
+  //       {
+  //         date_generated: home.lastUpdated,
+  //         number_crews: home.currentSituations[0].displayValue,
+  //         number_customers_affected: home.currentSituations[1].displayValue,
+  //         percent_with_power: home.currentSituations[2].displayValue,
+  //       }
+  //     ]
+  //   )
+  // );
 
   const api = await (await fetch(`https://kubra.io/${slug}/public/summary-1/data.json`)).json();
-  const api_history = csvParse(readFileSync("./data-api.csv").toString());
-  writeFileSync(
-    "./data-api.csv", 
-    csvFormat(
-      [...api_history,
-        {
-          total_affected: api.summaryFileData.totals[0].total_cust_a.val,
-          total_percent_affected: api.summaryFileData.totals[0].total_percent_cust_a.val,
-          total_percent_active: api.summaryFileData.totals[0].total_percent_cust_active.val,
-          total_served: api.summaryFileData.totals[0].total_cust_s,
-          total_outages: api.summaryFileData.totals[0].total_outages,
-          date_generated: api.summaryFileData.date_generated,
-        }
-      ]
-    )
-  );
+  writeFileSync("./data-api.json", JSON.stringify(api, null, 2));
+  // const api_history = csvParse(readFileSync("./data-api.csv").toString());
+  // writeFileSync(
+  //   "./data-api.csv", 
+  //   csvFormat(
+  //     [...api_history,
+  //       {
+  //         total_affected: api.summaryFileData.totals[0].total_cust_a.val,
+  //         total_percent_affected: api.summaryFileData.totals[0].total_percent_cust_a.val,
+  //         total_percent_active: api.summaryFileData.totals[0].total_percent_cust_active.val,
+  //         total_served: api.summaryFileData.totals[0].total_cust_s,
+  //         total_outages: api.summaryFileData.totals[0].total_outages,
+  //         date_generated: api.summaryFileData.date_generated,
+  //       }
+  //     ]
+  //   )
+  // );
 
   console.log(
     slug, 
