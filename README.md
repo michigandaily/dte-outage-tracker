@@ -4,9 +4,13 @@ Retrieve [DTE](https://www.dteenergy.com/) outage data.
 
 ## Retrieving historical data
 
-The `main.mjs` script runs every hour on GitHub Actions. The script retrieves high-level data from the internal DTE [Kubra](https://www.kubra.com/) API and writes to `data-api.json`. The script also retrieves high-level data from the external-facing DTE dashboard and writes to `data-home.json`. In addition, the script writes to `data.csv` with more granular Kubra data based on ZIP Code. The script overwrites these files on each run, but we are still able to retrieve historical data based on Git commit history using the [`git-history`](https://github.com/simonw/git-history) package authored by [Simon Willison](https://en.wikipedia.org/wiki/Simon_Willison).
+The `main.mjs` script runs every hour on GitHub Actions.
 
-## Scripts
+- The script retrieves high-level data from the internal DTE [Kubra](https://www.kubra.com/) API and writes to `data-api.json`.
+-The script also retrieves high-level data from the external-facing DTE dashboard and writes to `data-home.json`.
+- In addition, the script writes to `data.csv` with more granular Kubra data based on ZIP Code.
+
+The script overwrites these files on each run, but we are still able to retrieve historical data based on Git commit history using the [`git-history`](https://github.com/simonw/git-history) package authored by [Simon Willison](https://en.wikipedia.org/wiki/Simon_Willison).
 
 ### Setup
 
@@ -14,13 +18,15 @@ The `main.mjs` script runs every hour on GitHub Actions. The script retrieves hi
 2. Run `source venv/bin/activate` to activate the virtual environment.
 3. Run `pip install -r requirements.txt` to install dependencies.
 
-### Notes
+### Scripts
 
-Run `./data-api.sh` to generate a SQL table at `data-api.sqlite` of historical data based on `data-api.json` commit history. Data is stored in the `item` table.
+- Run `./data-api.sh` to generate a SQL database at `data-api.sqlite` of historical data based on `data-api.json` commit history.
+- Run `./data-home.sh` to generate a SQL database at `data-home.sqlite` of historical data based on `data-home.json` commit history.
+- Run `./data.sh` to generate a SQL database at `data.sqlite` of historical data based on `data.csv` commit history.
 
-Run `./data-home.sh` to generate a SQL table at `data-home.sqlite` of historical data based on `data-home.json` commit history. Data is stored in the `item` table.
+All pertinent data is stored in the `item` table.
 
-These scripts will likely take several seconds to execute. Note that for both files, there will be a gap in data from March 1 to April 26 during which the `data-api.json` and `data-home.json` files did not exist in Git history. However, you can use the `archive/data-api.csv` and `archive/data-home.csv` files to fill in these gaps.
+These scripts will likely take several seconds to execute. Note that for both files, there will be a gap in data from March 1 to April 26 during which the `data-api.json` and `data-home.json` files did not exist in Git history. However, you can use the `archive/data-api.csv` and `archive/data-home.csv` files to fill in these gaps. The `data.csv` file does not have such a gap.
 
 ## Archive
 
