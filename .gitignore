@@ -1,4 +1,9 @@
+# Dependencies
 node_modules
-*Z.json
-
 venv/
+
+# SQL tables
+*.sqlite
+
+# macOS
+.DS_Store
