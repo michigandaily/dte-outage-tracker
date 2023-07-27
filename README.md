@@ -48,10 +48,10 @@ The files in the `backfill` directory were used to backfill DTE outage data from
 
 The `reconcile.mjs` script was used to merge a local temporary historical file with the main file. It was a one-off script.
 
-## Related artifacts
+## References
 
-- We wrote a [news briefing](https://www.michigandaily.com/news/news-briefs/massive-power-outage-in-ann-arbor-leaves-thousands-in-the-dark/) with visualizations of this data.
-- Eric Lau used the data to [visualize discrepancies](https://twitter.com/erxclau/status/1631116061373345797?s=20) between external and internal DTE outage data.
+- Shao Hsuan Wu from The Michigan Daily [wrote](https://www.michigandaily.com/news/news-briefs/massive-power-outage-in-ann-arbor-leaves-thousands-in-the-dark/) a news briefing on power outages in Southeastern Michigan during February 2023. Eric Lau contributed data visualizations using this data.
+- Eric Lau [visualized discrepancies](https://twitter.com/erxclau/status/1631116061373345797?s=20) between external and internal DTE outage data.
 - Eric Lau [presented](https://youtu.be/9WkSCphC9-o?t=12790) on the data to the Michigan Public Service Commission (MPSC) as part of a technical conference to address energy resiliency in Michigan.
-- Simon Willison was written [several blog posts](https://simonwillison.net/series/git-scraping/) on using GitHub Actions and `git-history` to scrape data.
-- Open Kentuckiana, a group of technologists from Kentucky, conducted a [similar power outage analysis](https://openkentuckiana.org/2019-12-18-power-utility-data/) using the Kubra API. Their analysis is more granular with respect to geospatial clusters of outages. Their repository also uses [`git-history`](https://github.com/openkentuckiana/power-outage-data).
+- Simon Willison has [written]((https://simonwillison.net/series/git-scraping/)) several blog posts on using GitHub Actions and `git-history` to scrape data.
+- Open Kentuckiana, a group of technologists from Kentucky, [conducted](https://openkentuckiana.org/2019-12-18-power-utility-data/) a similar power outage analysis using the Kubra API. Their [analysis](https://github.com/openkentuckiana/power-outage-data) is more granular with respect to geospatial clusters of outages.
