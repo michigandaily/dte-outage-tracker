@@ -1,4 +1,4 @@
-git-history file data-api.sqlite data-api.json \
+git-history file ./data-api.sqlite ./data-api.json \
   --convert '
 data = json.loads(content)
 return [
