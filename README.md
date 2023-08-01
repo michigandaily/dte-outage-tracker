@@ -7,7 +7,7 @@ Retrieve [DTE](https://www.dteenergy.com/) outage data.
 The `main.mjs` script runs every hour on GitHub Actions.
 
 - The script retrieves high-level data from the internal DTE [Kubra](https://www.kubra.com/) API and writes to `data-api.json`.
--The script also retrieves high-level data from the external-facing DTE dashboard and writes to `data-home.json`.
+- The script also retrieves high-level data from the external-facing DTE dashboard and writes to `data-home.json`.
 - In addition, the script writes to `data.csv` with more granular Kubra data based on ZIP Code.
 
 The script overwrites these files on each run, but we are still able to retrieve historical data based on Git commit history using the [`git-history`](https://github.com/simonw/git-history) package authored by [Simon Willison](https://en.wikipedia.org/wiki/Simon_Willison).
