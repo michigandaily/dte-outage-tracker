@@ -1,21 +1,21 @@
 {
-  "lastUpdated": "2025-08-22T13:20:01.108Z",
+  "lastUpdated": "2025-08-22T13:40:01.375Z",
   "currentSituations": [
     {
       "key": "crews",
-      "displayValue": "140"
+      "displayValue": "141"
     },
     {
       "key": "customersAffected",
-      "displayValue": "84"
+      "displayValue": "77"
     },
     {
       "key": "percentageWithPower",
       "displayValue": "99.99"
     }
   ],
-  "totalCustomers": "2272869",
-  "customersAffected": "84",
-  "customersWithPower": "2272785",
+  "totalCustomers": "2272793",
+  "customersAffected": "77",
+  "customersWithPower": "2272716",
   "percentageWithPower": "99.99"
 }
