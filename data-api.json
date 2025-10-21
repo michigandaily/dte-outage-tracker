@@ -5,19 +5,19 @@
       {
         "summaryTotalId": "total-1",
         "total_cust_a": {
-          "val": 2190
+          "val": 1011
         },
         "total_percent_cust_a": {
-          "val": 0.1
+          "val": 0.05
         },
         "total_percent_cust_active": {
-          "val": 99.9
+          "val": 99.95
         },
         "total_cust_s": 2264317,
-        "total_outages": 120
+        "total_outages": 97
       }
     ],
-    "date_generated": "2025-10-20T23:33:36.722Z",
+    "date_generated": "2025-10-21T01:34:19.915Z",
     "overwritten_ca": false,
     "overwritten_etr": false,
     "page_mode": {
